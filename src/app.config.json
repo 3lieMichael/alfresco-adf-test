@@ -1,0 +1,111 @@
+{
+    "$schema": "../node_modules/@alfresco/adf-core/app.config.schema.json",
+    "ecmHost": "http://{hostname}{:port}",
+    "bpmHost": "http://{hostname}{:port}",
+    "providers" : "ECM",
+    "application": {
+        "name": "Alfresco ADF Application"
+    },
+    "languages": [
+        {
+            "key": "en",
+            "label": "English"
+        },
+        {
+            "key": "fr",
+            "label": "French"
+        },
+        {
+            "key": "de",
+            "label": "German"
+        },
+        {
+            "key": "it",
+            "label": "Italian"
+        },
+        {
+            "key": "es",
+            "label": "Spanish"
+        },
+        {
+            "key": "ja",
+            "label": "Japanese"
+        },
+        {
+            "key": "nl",
+            "label": "Dutch"
+        },
+        {
+            "key": "pt-BR",
+            "label": "Brazilian Portuguese"
+        },
+        {
+            "key": "nb",
+            "label": "Norwegian"
+        },
+        {
+            "key": "ru",
+            "label": "Russian"
+        },
+        {
+            "key": "zh-CN",
+            "label": "Simplified Chinese"
+        }
+    ],
+    "logLevel" : "trace",
+    "search": {
+      "sorting": {
+          "options": [
+              { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
+              { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
+              { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true }
+          ],
+          "defaults": [
+              { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
+          ]
+      },
+      "filterQueries": [
+          { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+          { "query": "NOT cm:creator:System" }
+      ],
+      "facetFields": {
+        "expanded": true,
+        "fields": [
+          { "field": "content.mimetype", "mincount": 1, "label": "Type" },
+          { "field": "content.size", "mincount": 1, "label": "File Size" },
+          { "field": "creator", "mincount": 1, "label": "Creator" },
+          { "field": "modifier", "mincount": 1, "label": "Modifier" }
+        ]
+      },
+      "facetQueries": {
+          "label": "My facet queries",
+          "pageSize": 4,
+          "queries": [
+              { "query": "created:2018", "label": "Created This Year" },
+              { "query": "content.mimetype:text/html", "label": "Type: HTML" },
+              { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
+              { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+              { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
+              { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+              { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
+              { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
+          ]
+      },
+      "categories": [
+          {
+              "id": "queryName",
+              "name": "Name",
+              "enabled": true,
+              "expanded": true,
+              "component": {
+                  "selector": "adf-search-text",
+                  "settings": {
+                      "pattern": "cm:name:'(.*?)'",
+                      "field": "cm:name",
+                      "placeholder": "Enter the name"
+                  }
+              }
+          }
+      ]
+  }
+}
