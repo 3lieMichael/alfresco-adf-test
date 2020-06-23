@@ -6,6 +6,11 @@
     "application": {
         "name": "Alfresco ADF Application"
     },
+    "content-metadata": {
+        "presets": {
+            "default": "*"
+        }
+    },
     "languages": [
         {
             "key": "en",

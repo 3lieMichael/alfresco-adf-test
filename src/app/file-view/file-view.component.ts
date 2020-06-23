@@ -58,4 +58,8 @@ export class FileViewComponent implements OnInit {
     onUploadError(errorMessage: string) {
         this.snackBar.open(errorMessage, '', { duration: 4000 });
     }
+
+    onShowViewerChange(){
+        console.warn("onShowViewerChange");
+    }
 }

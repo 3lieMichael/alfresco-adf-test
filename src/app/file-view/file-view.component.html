@@ -22,7 +22,9 @@
         </adf-info-drawer>
     </ng-template>
 
-    <adf-viewer [nodeId]="nodeId">
+    <adf-viewer [nodeId]="nodeId"
+        
+        (showViewerChange)="onShowViewerChange()">
 
         <adf-viewer-toolbar-actions>
             <button mat-icon-button>

@@ -21,6 +21,8 @@ export class DocumentlistComponent {
 
   data: ObjectDataTableAdapter;
   schema: any;
+  node: any;
+  openSideNav = false;
 
   constructor(
     private notificationService: NotificationService,
@@ -38,23 +40,20 @@ export class DocumentlistComponent {
     this.previewFile(event.value.entry);
   }
 
+  showFileInfo(event) {
+    this.openSideNav = true;
+    this.node = event.value.entry;
+  }
+
+  closeSideNav(){
+    this.openSideNav = false;
+  }
+
   onGoBack(event: any) {
+    console.warn('onGoBack');
     this.showViewer = false;
     this.nodeId = null;
-  }
-
-  myCustomActionAfterDelete(event) {
-    let entry = event.value.entry;
-    let item = '';
-
-    if (entry.isFile) {
-      item = 'file';
-    } else if (entry.isFolder) {
-      item = 'folder';
-    }
-
-    this.notificationService.openSnackMessage(`Deleted ${item} "${entry.name}" `, 5000);
-  }
+  }  
 
   onItemClicked(event) {
     this.previewFile(event.entry);
@@ -97,14 +96,23 @@ export class DocumentlistComponent {
     });
   }
 
-  onMove(event){
-    console.warn(event);
-    this.contentDialogServicek
-            .openCopyMoveDialog("copy", this.documentList.currentFolderId, "copy")
-            .subscribe((selections: MinimalNode[]) => {
-                // place your action here on operation success!
-                console.warn("Move success");
-            });
+  afterCopy(event){
+    console.warn('afterCopy');
+    let entry = event.value.entry;
+    this.notificationService.openSnackMessage(`"${entry.name}" was successfuly copied`, 3000);
+  }
+
+  afterMove(event){   
+    console.warn('afterCopy'); 
+    this.documentList.reload();
+    let entry = event.value.entry;
+    this.notificationService.openSnackMessage(`"${entry.name}" was successfuly moved`, 3000);
+  }
+
+  afterDelete(event) {
+    let entry = event.value.entry;
+    this.documentList.reload();
+    this.notificationService.openSnackMessage(`"${entry.name}" was successfuly deleted`, 3000);
   }
 
 }

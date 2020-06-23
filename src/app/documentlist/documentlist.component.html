@@ -1,85 +1,135 @@
-<adf-toolbar>
-  <adf-toolbar-title>
-    <adf-breadcrumb class="files-breadcrumb" root="Personal Files" [target]="documentList"
-      [folderNode]="documentList.folderNode">
-    </adf-breadcrumb>
-  </adf-toolbar-title>
 
-  <adf-search-control [highlight]="true"
-    (optionClicked)="onItemClicked($event)">
-    <adf-empty-search-result>
-      <!-- YOUR CUSTOM TEMPLATE HERE -->
-      <span>YOUR CUSTOM MESSAGE</span>
-    </adf-empty-search-result>
-  </adf-search-control>
 
-  <div class="adf-toolbar--spacer"></div>
 
-  <adf-upload-button [rootFolderId]="documentList.currentFolderId || '-root-'"
-    [adf-check-allowable-operation]="'create'" (success)="uploadSuccess($event)">
-  </adf-upload-button>
 
-</adf-toolbar>
 
-<adf-document-list
-  #documentList currentFolderId="-root-"
-  (preview)="showPreview($event)"
-  [contentActions]="true">
 
-  <!-- <adf-custom-empty-content-template>
-    <h1>Sorry, no content here</h1>
-  </adf-custom-empty-content-template> -->
 
-  <content-actions>
-    <content-action
-        target="folder"
-        title="Download"
-        handler="download">
-    </content-action>
-    <content-action
-        target="folder"
-        title="Move"
-        handler="move">
-    </content-action>
-    <content-action
-        target="folder"
-        title="Copy"
-        handler="copy">
-    </content-action>
-    <content-action
-        target="folder"
-        title="Delete"
-        permission="delete"
-        disableWithNoPermission="true"
-        handler="delete"
-        (execute)="myCustomActionAfterDelete($event)">
-    </content-action>
 
-    <content-action
-        target="document"
-        title="Download"
-        handler="download">
-    </content-action>
-    <content-action
-        target="document"
-        title="Move"
-        handler="move">
-    </content-action>
-    <content-action
-        target="document"
-        title="Copy"
-        handler="copy"
-        (execute)="onMove($event)">
-    </content-action>
-    <content-action
-        target="document"
-        title="Delete"
-        permission="delete"
-        disableWithNoPermission="true"
-        handler="delete"
-        (execute)="myCustomActionAfterDelete($event)">
-    </content-action>
-  </content-actions>
-</adf-document-list>
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main" [className]="openSideNav ? 'open-sidenav' : ''">
+  <adf-toolbar>
+    <adf-toolbar-title>
+      <adf-breadcrumb class="files-breadcrumb" root="Personal Files" [target]="documentList"
+        [folderNode]="documentList.folderNode">
+      </adf-breadcrumb>
+    </adf-toolbar-title>
+  
+    <adf-search-control [highlight]="true"
+      (optionClicked)="onItemClicked($event)">
+      <adf-empty-search-result>
+        <!-- YOUR CUSTOM TEMPLATE HERE -->
+        <span>YOUR CUSTOM MESSAGE</span>
+      </adf-empty-search-result>
+    </adf-search-control>
+  
+    <div class="adf-toolbar--spacer"></div>
+  
+    <adf-upload-button [rootFolderId]="documentList.currentFolderId || '-root-'"
+      [adf-check-allowable-operation]="'create'" (success)="uploadSuccess($event)">
+    </adf-upload-button>
+  
+  </adf-toolbar>
+  
+  <adf-document-list
+    #documentList currentFolderId="-root-"
+    (preview)="showPreview($event)"
+    [contentActions]="true">
+  
+    <!-- <adf-custom-empty-content-template>
+      <h1>Sorry, no content here</h1>
+    </adf-custom-empty-content-template> -->
+  
+    <content-actions>
+      <content-action
+          target="folder"
+          title="Download"
+          handler="download">
+      </content-action>
+      <content-action
+          target="folder"
+          title="Move"
+          handler="move"
+          disableWithNoPermission="true"
+          permission="update"
+          (execute)="afterMove($event)">
+      </content-action>
+      <content-action
+          target="folder"
+          title="Copy"
+          handler="copy"
+          disableWithNoPermission="true"
+          permission="copy"
+          (execute)="afterCopy($event)">
+      </content-action>
+      <content-action
+          target="folder"
+          title="Delete"
+          permission="delete"
+          disableWithNoPermission="true"
+          handler="delete"
+          (execute)="afterDelete($event)">
+      </content-action>
+  
+      <content-action
+          target="document"
+          title="Info"
+          (execute)="showFileInfo($event)">      
+      </content-action>
+      <content-action
+          target="document"
+          title="Preview"
+          (execute)="showPreview($event)">
+      </content-action>
+      <content-action
+          target="document"
+          title="Download"
+          handler="download">
+      </content-action>
+      <content-action
+          target="document"
+          title="Move"
+          handler="move"
+          disableWithNoPermission="true"
+          permission="update"
+          (execute)="afterMove($event)">
+      </content-action>
+      <content-action
+          target="document"
+          title="Copy"
+          handler="copy"
+          disableWithNoPermission="true"
+          permission="copy"
+          (execute)="afterCopy($event)">
+      </content-action>
+      <content-action
+          target="document"
+          title="Delete"
+          permission="delete"
+          disableWithNoPermission="true"
+          handler="delete"
+          (execute)="afterDelete($event)">
+      </content-action>
+    </content-actions>
+  </adf-document-list>
+  
+  <adf-file-uploading-dialog></adf-file-uploading-dialog>
+</div>
 
-<adf-file-uploading-dialog></adf-file-uploading-dialog>
+<div id="mySidenav" [className]="openSideNav ? 'open-sidenav sidenav' : 'sidenav'">
+  <adf-info-drawer-layout>
+    <div info-drawer-title>File info</div>
+  
+    <div info-drawer-buttons (click)="closeSideNav()">
+        <mat-icon>clear</mat-icon>
+    </div>
+  
+    <div info-drawer-content>
+      <adf-content-metadata-card
+          [displayEmpty]="true"    
+          [preset]="'*'"
+          [node]="node">
+      </adf-content-metadata-card>
+    </div>
+  </adf-info-drawer-layout>
+</div>
