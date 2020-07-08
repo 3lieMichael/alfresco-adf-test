@@ -1,4 +1,4 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="200" [stepOver]="780" [hideSidenav]="false" [expandedSidenav]="expanded">
+<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="200" [stepOver]="780" [hideSidenav]="false">
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu" >
@@ -18,7 +18,7 @@
     <adf-sidenav-layout-navigation>
         <ng-template let-isMenuMinimized="isMenuMinimized">
             <mat-nav-list class="adf-sidenav-linklist">
-                <a mat-list-item class="adf-sidenav-link" routerLink="/login">
+                <a mat-list-item class="adf-sidenav-link" routerLink="/login" *ngIf="!isLoggedIn">
                     <mat-icon matListIcon class="sidenav-menu-icon">vpn_key</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Login</div>
                 </a>
@@ -26,7 +26,11 @@
                     <mat-icon matListIcon class="sidenav-menu-icon">folder_open</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Documents</div>
                 </a>
-                <a mat-list-item adf-logout class="adf-sidenav-link">
+                <a mat-list-item class="adf-sidenav-link" routerLink="/documentlist">
+                  <mat-icon matListIcon class="sidenav-menu-icon">query_builder</mat-icon>
+                  <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Recent files</div>
+              </a>
+                <a mat-list-item adf-logout class="adf-sidenav-link" *ngIf="isLoggedIn">
                     <mat-icon matListIcon class="sidenav-menu-icon">exit_to_app</mat-icon>
                     <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Logout</div>
                 </a>

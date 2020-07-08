@@ -110,6 +110,22 @@
                       "placeholder": "Enter the name"
                   }
               }
+          },
+          {
+            "id": "checkList",
+            "name": "Check List",
+            "enabled": true,
+            "component": {
+                "selector": "check-list",
+                "pageSize": 5,
+                "settings": {
+                    "operator": "OR",
+                    "options": [
+                        { "name": "Folder", "value": "TYPE:'cm:folder'" },
+                        { "name": "Document", "value": "TYPE:'cm:content'" }
+                    ]
+                }
+            }
           }
       ]
   }

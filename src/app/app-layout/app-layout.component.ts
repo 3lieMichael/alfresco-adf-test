@@ -1,20 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '@alfresco/adf-core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app-layout.component.html',
   styleUrls: ['./app-layout.component.css']
 })
-export class AppLayoutComponent {
-  expanded = false;
+export class AppLayoutComponent implements OnInit {
+  isLoggedIn = false;
 
-  constructor() {
+  constructor(private authService: AuthenticationService) {
   }
 
-  expandedSidenav() {
-    console.log("Clicked..");
-    
-    this.expanded != this.expanded;
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
 }

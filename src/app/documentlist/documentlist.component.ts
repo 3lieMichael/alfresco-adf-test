@@ -26,7 +26,7 @@ export class DocumentlistComponent {
 
   constructor(
     private notificationService: NotificationService,
-    private preview: PreviewService, 
+    private preview: PreviewService,
     private searchService: SearchService,
     private contentDialogService: ContentNodeDialogService ) {
   }
@@ -53,7 +53,7 @@ export class DocumentlistComponent {
     console.warn('onGoBack');
     this.showViewer = false;
     this.nodeId = null;
-  }  
+  }
 
   onItemClicked(event) {
     this.previewFile(event.entry);
@@ -102,8 +102,8 @@ export class DocumentlistComponent {
     this.notificationService.openSnackMessage(`"${entry.name}" was successfuly copied`, 3000);
   }
 
-  afterMove(event){   
-    console.warn('afterCopy'); 
+  afterMove(event){
+    console.warn('afterCopy');
     this.documentList.reload();
     let entry = event.value.entry;
     this.notificationService.openSnackMessage(`"${entry.name}" was successfuly moved`, 3000);
@@ -113,6 +113,13 @@ export class DocumentlistComponent {
     let entry = event.value.entry;
     this.documentList.reload();
     this.notificationService.openSnackMessage(`"${entry.name}" was successfuly deleted`, 3000);
+  }
+
+  onSuccess(event){
+    console.warn('************************************************************');
+    console.warn('drag and drop working');
+    console.warn(event);
+    console.warn('************************************************************');
   }
 
 }
