@@ -8,6 +8,14 @@ import { AuthenticationService } from '@alfresco/adf-core';
 })
 export class AppLayoutComponent implements OnInit {
   isLoggedIn = false;
+  aliases = [
+    {link: '/documentlist/-mysites-', title: 'My Sites', icon: 'dashboard'},
+    {link: '/documentlist/-sharedlinks-', title: 'Shared Links', icon: 'share'},
+    {link: '/documentlist/-sites-', title: 'Sites', icon: 'picture_in_picture'},
+    {link: '/documentlist/-favorites-', title: 'Favorites', icon: 'favorite'},
+    {link: '/documentlist/-recent-', title: 'Recent Files', icon: 'query_builder'},
+    {link: '/documentlist/-trashcan-', title: 'Trashcan', icon: 'delete'},
+  ];
 
   constructor(private authService: AuthenticationService) {
   }

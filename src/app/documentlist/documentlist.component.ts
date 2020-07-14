@@ -1,16 +1,17 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, OnInit } from '@angular/core';
 import { NotificationService, SearchService, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { DocumentListComponent, ContentNodeDialogService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../services/preview.service';
 import { ResultSetPaging, ResultNode, ResultSetRowEntry } from '@alfresco/js-api';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-documentlist',
   templateUrl: './documentlist.component.html',
   styleUrls: ['./documentlist.component.css']
 })
-export class DocumentlistComponent {
+export class DocumentlistComponent implements OnInit {
 
   @Input()
   showViewer = false;
@@ -23,17 +24,31 @@ export class DocumentlistComponent {
   schema: any;
   node: any;
   openSideNav = false;
+  currentFolderId = '-root-';
 
   constructor(
     private notificationService: NotificationService,
     private preview: PreviewService,
     private searchService: SearchService,
-    private contentDialogService: ContentNodeDialogService ) {
+    private contentDialogService: ContentNodeDialogService,
+    private route: ActivatedRoute) {
   }
 
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      const alias = params['alias'];
+
+      this.currentFolderId = alias ? alias : '-root-';
+    });
+  }
+
+
+
   uploadSuccess(event: any) {
+    console.log(event);
     this.notificationService.openSnackMessage('File uploaded');
     this.documentList.reload();
+    this.showFileInfo(event);
   }
 
   showPreview(event) {

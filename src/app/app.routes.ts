@@ -42,6 +42,11 @@ export const appRoutes: Routes = [
         path: 'documentlist',
         component: DocumentlistComponent,
         canActivate: [AuthGuardEcm]
+      },
+      {
+        path: 'documentlist/:alias',
+        component: DocumentlistComponent,
+        canActivate: [AuthGuardEcm]
       }
 
     ]
